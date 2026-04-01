@@ -33,17 +33,17 @@ export function Header() {
   return (
     <>
       <header className={`sticky top-0 z-50 w-full border-b transition-colors duration-300 ${isOpen ? 'border-transparent bg-transparent' : 'border-border/50 bg-background/80 backdrop-blur-md'}`}>
-        <div className="container mx-auto flex h-20 items-center justify-end px-4 md:px-8 relative">
+        <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-8">
           
-          {/* Logo parfaitement centré */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
-            <Link href="/" className="flex items-center">
+          {/* Logo */}
+          <div className="z-50 flex items-center w-[50%] md:w-[180px]">
+            <Link href="/" className="w-full flex items-center">
               <Image 
                 src="https://evolve-jewellery.co.nz/cdn/shop/t/31/assets/logo.svg?v=8794358632039462281754538610" 
                 alt="Evolve Tahiti" 
-                width={100} 
-                height={30} 
-                className="h-4 md:h-5 w-auto"
+                width={180} 
+                height={40} 
+                className="w-full h-auto"
                 priority
               />
             </Link>
