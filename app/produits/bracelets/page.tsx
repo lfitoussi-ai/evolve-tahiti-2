@@ -1,5 +1,5 @@
 import { getProductsByType } from '@/lib/data';
-import { ProductCard } from '@/components/ProductCard';
+import { ProductGrid } from '@/components/ProductGrid';
 import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -19,11 +19,7 @@ export default async function BraceletsPage() {
         <div className="w-12 h-0.5 bg-primary mx-auto"></div>
         <p className="text-muted-foreground font-light tracking-wide">La base parfaite pour votre collection.</p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 md:gap-12">
-        {products.map((product) => (
-          <ProductCard key={product.slug} product={product} />
-        ))}
-      </div>
+      <ProductGrid initialProducts={products} />
     </div>
   );
 }

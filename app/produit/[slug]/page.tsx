@@ -61,10 +61,23 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="prose prose-sm md:prose-base dark:prose-invert font-light tracking-wide leading-relaxed text-muted-foreground">
             <p>{product.description}</p>
           </div>
+
+          <div className="space-y-2 pt-4">
+            {product.materiaux && (
+              <p className="text-sm font-light tracking-wide">
+                <span className="font-medium text-foreground uppercase text-[10px] tracking-widest mr-2">Matériaux:</span>
+                {product.materiaux}
+              </p>
+            )}
+            {product.ref && (
+              <p className="text-sm font-light tracking-wide">
+                <span className="font-medium text-foreground uppercase text-[10px] tracking-widest mr-2">Ref:</span>
+                {product.ref}
+              </p>
+            )}
+          </div>
+
           <div className="pt-8 space-y-6">
-            <p className="text-sm font-light tracking-wide text-muted-foreground">
-              Disponible dans nos écrins. Contactez-nous pour vérifier la disponibilité.
-            </p>
             <a href="/boutiques" className="inline-flex h-12 items-center justify-center rounded-sm bg-primary px-10 text-sm uppercase tracking-widest font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg">
               Voir nos boutiques
             </a>

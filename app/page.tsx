@@ -23,7 +23,7 @@ export default async function Home() {
               Découvrir la collection
             </Link>
             <Link href="/boutiques" className="inline-flex h-12 items-center justify-center rounded-sm border border-border bg-transparent px-10 text-sm uppercase tracking-widest transition-all hover:border-primary hover:text-primary">
-              Nos Écrins
+              Nos Boutiques
             </Link>
           </div>
         </div>

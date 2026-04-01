@@ -5,11 +5,13 @@ import Papa from 'papaparse';
 export interface Product {
   id?: string;
   slug: string;
-  type: 'charmes' | 'bracelets';
+  type: 'charmes' | 'bracelets' | 'boucles-d-oreilles' | 'colliers';
   title: string;
   price_xpf: number;
   photos_png: string[];
   description: string;
+  materiaux?: string;
+  ref?: string;
   is_active: boolean;
   createdAt?: any;
   updatedAt?: any;
@@ -51,11 +53,13 @@ export async function getProducts(): Promise<Product[]> {
   return data.map((item, index) => ({
     id: String(index),
     slug: String(item.slug).trim(),
-    type: String(item.type).trim().toLowerCase() as 'charmes' | 'bracelets',
+    type: String(item.type).trim().toLowerCase() as 'charmes' | 'bracelets' | 'boucles-d-oreilles' | 'colliers',
     title: item.title,
     price_xpf: parseInt(item.price_xpf) || 0,
     photos_png: item.photos_png ? item.photos_png.split('|').map((url: string) => url.trim()) : [],
     description: item.description,
+    materiaux: item.materiaux,
+    ref: item.ref,
     is_active: String(item.is_active).trim().toLowerCase() === 'true' || String(item.is_active).trim() === '1',
   })).sort((a, b) => a.slug.localeCompare(b.slug));
 }
@@ -70,7 +74,7 @@ export async function getProductBySlug(slug: string): Promise<Product | undefine
   return products.find(p => p.slug === slug);
 }
 
-export async function getProductsByType(type: 'charmes' | 'bracelets'): Promise<Product[]> {
+export async function getProductsByType(type: 'charmes' | 'bracelets' | 'boucles-d-oreilles' | 'colliers'): Promise<Product[]> {
   const products = await getActiveProducts();
   return products.filter(p => p.type === type);
 }

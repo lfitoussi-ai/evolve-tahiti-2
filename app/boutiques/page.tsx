@@ -2,7 +2,7 @@ import { getStores } from '@/lib/data';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Nos Écrins | Evolve Tahiti',
+  title: 'Nos Boutiques | Evolve Tahiti',
   description: 'Trouvez la boutique Evolve Tahiti la plus proche de chez vous.',
 };
 
@@ -12,7 +12,7 @@ export default async function StoresPage() {
   return (
     <div className="container mx-auto px-4 py-16 space-y-12">
       <div className="space-y-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-light uppercase tracking-widest">Nos Écrins</h1>
+        <h1 className="text-4xl md:text-5xl font-light uppercase tracking-widest">Nos Boutiques</h1>
         <div className="w-12 h-0.5 bg-primary mx-auto"></div>
         <p className="text-muted-foreground font-light tracking-wide">Venez découvrir nos collections en magasin.</p>
       </div>
