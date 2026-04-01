@@ -1,15 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { auth } from '@/lib/firebase';
-import { onAuthStateChanged, signInAnonymously, signOut, User } from 'firebase/auth';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 const ADMIN_SECRET = process.env.NEXT_PUBLIC_ADMIN_SECRET || "1234";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
@@ -17,41 +15,31 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
+    const authStatus = sessionStorage.getItem('admin_auth');
+    if (authStatus === 'true') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsAuthenticated(true);
+    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLoading(false);
   }, []);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     
     if (pin === ADMIN_SECRET) {
-      try {
-        await signInAnonymously(auth);
-      } catch (err: any) {
-        console.error("Login failed", err);
-        if (err.code === 'auth/admin-restricted-operation') {
-          setError("L'authentification anonyme n'est pas activée dans la console Firebase.");
-        } else {
-          setError("Erreur d'authentification : " + err.message);
-        }
-      }
+      sessionStorage.setItem('admin_auth', 'true');
+      setIsAuthenticated(true);
     } else {
       setError("Code incorrect");
       setPin('');
     }
   };
 
-  const handleLogout = async () => {
-    await signOut(auth);
+  const handleLogout = () => {
+    sessionStorage.removeItem('admin_auth');
+    setIsAuthenticated(false);
     router.push('/');
   };
 
@@ -63,7 +51,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     );
   }
 
-  if (!user) {
+  if (!isAuthenticated) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background px-4">
         <div className="max-w-md w-full space-y-8 text-center">
@@ -100,9 +88,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const navItems = [
     { name: 'Dashboard', href: '/admin' },
-    { name: 'Produits', href: '/admin/produits' },
-    { name: 'Boutiques', href: '/admin/boutiques' },
-    { name: 'FAQ', href: '/admin/faq' },
+    { name: 'Produits (CSV)', href: '/admin/produits' },
+    { name: 'Boutiques (CSV)', href: '/admin/boutiques' },
+    { name: 'FAQ (CSV)', href: '/admin/faq' },
   ];
 
   return (

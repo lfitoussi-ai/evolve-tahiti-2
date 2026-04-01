@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getActiveProducts, getStores, getFaqs } from '@/lib/data';
 import Link from 'next/link';
 
 export default function AdminDashboard() {
@@ -14,17 +13,17 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     async function fetchStats() {
-      const [products, stores, faqs] = await Promise.all([
-        getActiveProducts(),
-        getStores(),
-        getFaqs(),
-      ]);
-      setStats({
-        products: products.length,
-        stores: stores.length,
-        faqs: faqs.length,
-      });
-      setLoading(false);
+      try {
+        const res = await fetch('/api/stats');
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch stats", error);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchStats();
   }, []);
@@ -73,10 +72,10 @@ export default function AdminDashboard() {
         <h2 className="text-2xl font-light tracking-wide">Actions Rapides</h2>
         <div className="flex flex-wrap gap-4">
           <Link
-            href="/admin/produits/nouveau"
+            href="/admin/produits"
             className="inline-flex h-10 items-center justify-center rounded-sm bg-primary px-6 text-xs uppercase tracking-widest font-medium text-primary-foreground transition-all hover:bg-primary/90"
           >
-            Ajouter un produit
+            Gérer les produits
           </Link>
           <Link
             href="/"

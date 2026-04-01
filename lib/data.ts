@@ -1,5 +1,6 @@
-import { db } from './firebase';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+import fs from 'fs';
+import path from 'path';
+import Papa from 'papaparse';
 
 export interface Product {
   id?: string;
@@ -32,76 +33,68 @@ export interface FAQ {
   answer: string;
 }
 
-export async function getProducts(): Promise<Product[]> {
+function readCSV<T>(filename: string): T[] {
   try {
-    const productsCol = collection(db, 'products');
-    const q = query(productsCol, orderBy('slug', 'asc'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
+    const filePath = path.join(process.cwd(), 'data', filename);
+    if (!fs.existsSync(filePath)) return [];
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    const results = Papa.parse(fileContent, { header: true, skipEmptyLines: true });
+    return results.data as T[];
   } catch (error) {
-    console.error('Error fetching products from Firestore:', error);
+    console.error(`Error reading ${filename}:`, error);
     return [];
   }
+}
+
+export async function getProducts(): Promise<Product[]> {
+  const data = readCSV<any>('products.csv');
+  return data.map((item, index) => ({
+    id: String(index),
+    slug: item.slug,
+    type: item.type as 'charmes' | 'bracelets',
+    title: item.title,
+    price_xpf: parseInt(item.price_xpf) || 0,
+    photos_png: item.photos_png ? item.photos_png.split('|').map((url: string) => url.trim()) : [],
+    description: item.description,
+    is_active: item.is_active === 'true' || item.is_active === '1',
+  })).sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
 export async function getActiveProducts(): Promise<Product[]> {
-  try {
-    const productsCol = collection(db, 'products');
-    const q = query(productsCol, where('is_active', '==', true), orderBy('slug', 'asc'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
-  } catch (error) {
-    console.error('Error fetching active products from Firestore:', error);
-    return [];
-  }
+  const products = await getProducts();
+  return products.filter(p => p.is_active);
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | undefined> {
-  try {
-    const productsCol = collection(db, 'products');
-    const q = query(productsCol, where('slug', '==', slug), where('is_active', '==', true));
-    const snapshot = await getDocs(q);
-    if (snapshot.empty) return undefined;
-    const doc = snapshot.docs[0];
-    return { id: doc.id, ...doc.data() } as Product;
-  } catch (error) {
-    console.error('Error fetching product by slug from Firestore:', error);
-    return undefined;
-  }
+  const products = await getActiveProducts();
+  return products.find(p => p.slug === slug);
 }
 
 export async function getProductsByType(type: 'charmes' | 'bracelets'): Promise<Product[]> {
-  try {
-    const productsCol = collection(db, 'products');
-    const q = query(productsCol, where('type', '==', type), where('is_active', '==', true), orderBy('slug', 'asc'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
-  } catch (error) {
-    console.error('Error fetching products by type from Firestore:', error);
-    return [];
-  }
+  const products = await getActiveProducts();
+  return products.filter(p => p.type === type);
 }
 
 export async function getStores(): Promise<Store[]> {
-  try {
-    const storesCol = collection(db, 'stores');
-    const q = query(storesCol, orderBy('name', 'asc'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Store));
-  } catch (error) {
-    console.error('Error fetching stores from Firestore:', error);
-    return [];
-  }
+  const data = readCSV<any>('stores.csv');
+  return data.map((item, index) => ({
+    id: String(index),
+    name: item.name,
+    hours: item.hours,
+    google_maps_url: item.google_maps_url,
+    phone: item.phone,
+    email: item.email,
+    messenger_url: item.messenger_url,
+    notes: item.notes,
+  })).sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export async function getFaqs(): Promise<FAQ[]> {
-  try {
-    const faqsCol = collection(db, 'faqs');
-    const q = query(faqsCol, orderBy('order', 'asc'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as FAQ));
-  } catch (error) {
-    console.error('Error fetching FAQs from Firestore:', error);
-    return [];
-  }
+  const data = readCSV<any>('faqs.csv');
+  return data.map((item, index) => ({
+    id: String(index),
+    order: parseInt(item.order) || 0,
+    question: item.question,
+    answer: item.answer,
+  })).sort((a, b) => a.order - b.order);
 }
