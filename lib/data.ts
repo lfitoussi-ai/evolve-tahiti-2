@@ -12,7 +12,6 @@ export interface Product {
   description: string;
   materiaux?: string;
   ref?: string;
-  is_active: boolean;
   createdAt?: any;
   updatedAt?: any;
 }
@@ -35,13 +34,28 @@ export interface FAQ {
   answer: string;
 }
 
+function readJSON<T>(filename: string): T[] {
+  try {
+    const filePath = path.join(process.cwd(), 'data', filename);
+    if (!fs.existsSync(filePath)) return [];
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(fileContent) as T[];
+  } catch (error) {
+    console.error(`Error reading ${filename}:`, error);
+    return [];
+  }
+}
+
 function readCSV<T>(filename: string): T[] {
   try {
     const filePath = path.join(process.cwd(), 'data', filename);
     if (!fs.existsSync(filePath)) return [];
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    const results = Papa.parse(fileContent, { header: true, skipEmptyLines: true });
-    return results.data as T[];
+    const { data } = Papa.parse(fileContent, {
+      header: true,
+      skipEmptyLines: true,
+    });
+    return data as T[];
   } catch (error) {
     console.error(`Error reading ${filename}:`, error);
     return [];
@@ -49,24 +63,22 @@ function readCSV<T>(filename: string): T[] {
 }
 
 export async function getProducts(): Promise<Product[]> {
-  const data = readCSV<any>('products.csv');
+  const data = readJSON<any>('products.json');
   return data.map((item, index) => ({
     id: String(index),
     slug: String(item.slug).trim(),
     type: String(item.type).trim().toLowerCase() as 'charmes' | 'bracelets' | 'boucles-d-oreilles' | 'colliers',
     title: item.title,
-    price_xpf: parseInt(item.price_xpf) || 0,
-    photos_png: item.photos_png ? item.photos_png.split('|').map((url: string) => url.trim()) : [],
+    price_xpf: typeof item.price_xpf === 'number' ? item.price_xpf : parseInt(item.price_xpf) || 0,
+    photos_png: Array.isArray(item.photos_png) ? item.photos_png : (item.photos_png ? item.photos_png.split('|').map((url: string) => url.trim()) : []),
     description: item.description,
     materiaux: item.materiaux,
     ref: item.ref,
-    is_active: String(item.is_active).trim().toLowerCase() === 'true' || String(item.is_active).trim() === '1',
   })).sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
 export async function getActiveProducts(): Promise<Product[]> {
-  const products = await getProducts();
-  return products.filter(p => p.is_active);
+  return getProducts();
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | undefined> {
