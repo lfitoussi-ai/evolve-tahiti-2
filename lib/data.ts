@@ -50,13 +50,13 @@ export async function getProducts(): Promise<Product[]> {
   const data = readCSV<any>('products.csv');
   return data.map((item, index) => ({
     id: String(index),
-    slug: item.slug,
-    type: item.type as 'charmes' | 'bracelets',
+    slug: String(item.slug).trim(),
+    type: String(item.type).trim().toLowerCase() as 'charmes' | 'bracelets',
     title: item.title,
     price_xpf: parseInt(item.price_xpf) || 0,
     photos_png: item.photos_png ? item.photos_png.split('|').map((url: string) => url.trim()) : [],
     description: item.description,
-    is_active: item.is_active === 'true' || item.is_active === '1',
+    is_active: String(item.is_active).trim().toLowerCase() === 'true' || String(item.is_active).trim() === '1',
   })).sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
