@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "product": {
+      "title": "Produit",
+      "description": "Un bijou (charme ou bracelet) dans le catalogue",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Le nom du produit" },
+        "slug": { "type": "string", "description": "L'identifiant unique pour l'URL" },
+        "type": { "type": "string", "enum": ["charmes", "bracelets"], "description": "La catégorie du produit" },
+        "price_xpf": { "type": "number", "description": "Le prix en Francs Pacifique" },
+        "description": { "type": "string", "description": "Description détaillée du produit" },
+        "is_active": { "type": "boolean", "description": "Si le produit est affiché dans le catalogue" },
+        "photos_png": { "type": "array", "items": { "type": "string" }, "description": "Liste des URLs des photos" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Date de création" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Date de dernière modification" }
+      },
+      "required": ["title", "slug", "type", "price_xpf"]
+    },
+    "store": {
+      "title": "Boutique",
+      "description": "Un point de vente physique",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Nom de la boutique" },
+        "hours": { "type": "string", "description": "Horaires d'ouverture" },
+        "google_maps_url": { "type": "string", "description": "Lien vers Google Maps" },
+        "phone": { "type": "string", "description": "Numéro de téléphone" },
+        "email": { "type": "string", "description": "Adresse email de contact" },
+        "messenger_url": { "type": "string", "description": "Lien vers Messenger" },
+        "notes": { "type": "string", "description": "Notes supplémentaires" }
+      },
+      "required": ["name", "hours"]
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Une question fréquemment posée",
+      "type": "object",
+      "properties": {
+        "order": { "type": "integer", "description": "Ordre d'affichage" },
+        "question": { "type": "string", "description": "La question posée" },
+        "answer": { "type": "string", "description": "La réponse à la question" }
+      },
+      "required": ["order", "question", "answer"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "product",
+      "description": "Collection des produits"
+    },
+    "/stores/{storeId}": {
+      "schema": "store",
+      "description": "Collection des boutiques"
+    },
+    "/faqs/{faqId}": {
+      "schema": "faq",
+      "description": "Collection des questions fréquentes"
+    }
+  }
+}
