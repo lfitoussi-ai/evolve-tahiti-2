@@ -2,6 +2,8 @@ import { getActiveProducts } from '@/lib/data';
 import { ProductCard } from '@/components/ProductCard';
 import { Metadata } from 'next';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Tous les produits | Evolve Tahiti',
   description: 'Découvrez notre catalogue complet de charmes et bracelets.',

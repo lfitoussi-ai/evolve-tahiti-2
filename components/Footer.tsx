@@ -7,9 +7,6 @@ export function Footer() {
         <p className="text-center text-sm tracking-widest uppercase text-muted-foreground">
           © {new Date().getFullYear()} Evolve Tahiti. Tous droits réservés.
         </p>
-        <Link href="/admin" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
-          Administration
-        </Link>
       </div>
     </footer>
   );
