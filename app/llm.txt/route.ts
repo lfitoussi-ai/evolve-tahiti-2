@@ -6,15 +6,18 @@ export async function GET() {
   const stores = await getStores();
   const faqs = await getFaqs();
 
-  let text = `# Evolve Tahiti - Catalogue Structuré\n\n`;
+  let text = `# Evolve Tahiti - Catalogue Structuré pour IA\n\n`;
+  text += `Description : Bijouterie d'exception à Tahiti spécialisée dans les charmes, bracelets, boucles d'oreilles et colliers uniques. Collection zen, luxueuse et intemporelle.\n\n`;
   
   text += `## Produits\n\n`;
   products.forEach((p) => {
     text += `### ${p.title}\n`;
     text += `- Catégorie : ${p.type}\n`;
     text += `- Prix : ${p.price_xpf} XPF\n`;
+    if (p.materiaux) text += `- Matériaux : ${p.materiaux}\n`;
+    if (p.ref) text += `- Référence : ${p.ref}\n`;
     text += `- Description : ${p.description}\n`;
-    text += `- Lien : ${process.env.APP_URL || ''}/produit/${p.slug}\n\n`;
+    text += `- Lien : ${process.env.APP_URL || 'https://evolve-tahiti.com'}/produit/${p.slug}\n\n`;
   });
 
   text += `## Boutiques\n\n`;

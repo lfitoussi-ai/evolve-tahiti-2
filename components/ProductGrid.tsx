@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import { Search, X } from 'lucide-react';
 import { Product } from '@/lib/data';
 import { ProductCard } from './ProductCard';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ProductGridProps {
   initialProducts: Product[];
@@ -14,17 +14,30 @@ export function ProductGrid({ initialProducts }: ProductGridProps) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredProducts = useMemo(() => {
-    if (!searchQuery.trim()) return initialProducts;
+    const trimmedQuery = searchQuery.trim().toLowerCase();
+    if (!trimmedQuery) return initialProducts;
     
-    const query = searchQuery.toLowerCase().trim();
+    const queryWords = trimmedQuery.split(/\s+/);
+    
     return initialProducts.filter((product) => {
-      return (
-        product.title.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query) ||
-        (product.materiaux && product.materiaux.toLowerCase().includes(query)) ||
-        (product.ref && product.ref.toLowerCase().includes(query)) ||
-        product.type.toLowerCase().includes(query)
-      );
+      const searchableText = [
+        product.title,
+        product.description,
+        product.materiaux,
+        product.ref,
+        product.type
+      ].filter(Boolean).join(' ').toLowerCase();
+
+      // Chaque mot de la recherche doit être présent dans le texte du produit
+      return queryWords.every(word => {
+        if (word.length <= 2) {
+          // Pour les mots très courts (comme "or"), on cherche le mot entier
+          // pour éviter de matcher "d'oreilles", "doré", "force", etc.
+          const regex = new RegExp(`(^|[^a-zA-Z0-9À-ÿ])${word}([^a-zA-Z0-9À-ÿ]|$)`, 'i');
+          return regex.test(searchableText);
+        }
+        return searchableText.includes(word);
+      });
     });
   }, [searchQuery, initialProducts]);
 
@@ -60,7 +73,7 @@ export function ProductGrid({ initialProducts }: ProductGridProps) {
       )}
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 md:gap-12">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8 md:gap-12">
         <AnimatePresence mode="popLayout">
           {filteredProducts.map((product) => (
             <motion.div

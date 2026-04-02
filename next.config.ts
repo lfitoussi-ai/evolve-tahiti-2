@@ -19,12 +19,6 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'evolve-jewellery.co.nz',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'cdn.shopify.com',
         port: '',
         pathname: '/**',
@@ -32,7 +26,6 @@ const nextConfig: NextConfig = {
     ],
   },
   output: 'standalone',
-  transpilePackages: ['motion'],
   webpack: (config, {dev}) => {
     // HMR is disabled in AI Studio via DISABLE_HMR env var.
     // Do not modifyâfile watching is disabled to prevent flickering during agent edits.

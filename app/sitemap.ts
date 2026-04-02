@@ -38,6 +38,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/produits/boucles-d-oreilles`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/produits/colliers`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/boutiques`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

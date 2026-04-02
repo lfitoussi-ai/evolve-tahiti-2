@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +46,7 @@ export function Header() {
           <div className="z-50 flex items-center w-[50%] md:w-[180px]">
             <Link href="/" className="w-full flex items-center">
               <Image 
-                src="https://evolve-jewellery.co.nz/cdn/shop/t/31/assets/logo.svg?v=8794358632039462281754538610" 
+                src="/logo_evolve-pf_green.svg" 
                 alt="Evolve Tahiti" 
                 width={180} 
                 height={40} 

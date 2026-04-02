@@ -5,9 +5,49 @@ import { ProductCard } from '@/components/ProductCard';
 export default async function Home() {
   const activeProducts = await getActiveProducts();
   const products = activeProducts.slice(0, 4);
+  const baseUrl = process.env.APP_URL || 'https://evolve-tahiti.com';
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${baseUrl}/#organization`,
+        'name': 'Evolve Tahiti',
+        'url': baseUrl,
+        'logo': {
+          '@type': 'ImageObject',
+          'url': `${baseUrl}/logo.png`
+        },
+        'description': 'Bijouterie d\'exception à Tahiti proposant des charmes, bracelets, boucles d\'oreilles et colliers uniques.',
+        'address': {
+          '@type': 'PostalAddress',
+          'addressLocality': 'Papeete',
+          'addressRegion': 'Tahiti',
+          'addressCountry': 'PF'
+        }
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${baseUrl}/#website`,
+        'url': baseUrl,
+        'name': 'Evolve Tahiti',
+        'publisher': { '@id': `${baseUrl}/#organization` },
+        'potentialAction': {
+          '@type': 'SearchAction',
+          'target': `${baseUrl}/produits?q={search_term_string}`,
+          'query-input': 'required name=search_term_string'
+        }
+      }
+    ]
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden flex items-center justify-center text-center px-4">
         <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/tahitinature/1920/1080?blur=2')] bg-cover bg-center opacity-20"></div>
