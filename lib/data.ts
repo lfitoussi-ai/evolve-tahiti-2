@@ -46,7 +46,7 @@ function readJSON<T>(filename: string): T[] {
   }
 }
 
-function readCSV<T>(filename: string): T[] {
+function readDelimited<T>(filename: string): T[] {
   try {
     const filePath = path.join(process.cwd(), 'data', filename);
     if (!fs.existsSync(filePath)) return [];
@@ -92,7 +92,7 @@ export async function getProductsByType(type: 'charmes' | 'bracelets' | 'boucles
 }
 
 export async function getStores(): Promise<Store[]> {
-  const data = readCSV<any>('stores.csv');
+  const data = readDelimited<any>('stores.tsv');
   return data.map((item, index) => ({
     id: String(index),
     name: item.name,
@@ -106,7 +106,7 @@ export async function getStores(): Promise<Store[]> {
 }
 
 export async function getFaqs(): Promise<FAQ[]> {
-  const data = readCSV<any>('faqs.csv');
+  const data = readDelimited<any>('faqs.tsv');
   return data.map((item, index) => ({
     id: String(index),
     order: parseInt(item.order) || 0,
