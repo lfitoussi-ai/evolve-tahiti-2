@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css'; // Global styles
 import { SiteLayout } from '@/components/SiteLayout';
 
-const baseUrl = process.env.APP_URL || 'https://evolve-tahiti.com';
+const baseUrl = process.env.APP_URL || 'https://www.evolve.pf';
 
 export const metadata: Metadata = {
   title: {

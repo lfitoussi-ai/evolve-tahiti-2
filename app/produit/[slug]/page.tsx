@@ -39,7 +39,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
-  const baseUrl = process.env.APP_URL || 'https://evolve-tahiti.com';
+  const baseUrl = process.env.APP_URL || 'https://www.evolve.pf';
   const productUrl = `${baseUrl}/produit/${product.slug}`;
   const imageUrl = product.photos_png[0] ? (product.photos_png[0].startsWith('http') ? product.photos_png[0] : `${baseUrl}${product.photos_png[0]}`) : '';
 

@@ -5,7 +5,7 @@ import { ProductCard } from '@/components/ProductCard';
 export default async function Home() {
   const activeProducts = await getActiveProducts();
   const products = activeProducts.slice(0, 4);
-  const baseUrl = process.env.APP_URL || 'https://evolve-tahiti.com';
+  const baseUrl = process.env.APP_URL || 'https://www.evolve.pf';
 
   const jsonLd = {
     '@context': 'https://schema.org',

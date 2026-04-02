@@ -17,7 +17,7 @@ export async function GET() {
     if (p.materiaux) text += `- Matériaux : ${p.materiaux}\n`;
     if (p.ref) text += `- Référence : ${p.ref}\n`;
     text += `- Description : ${p.description}\n`;
-    text += `- Lien : ${process.env.APP_URL || 'https://evolve-tahiti.com'}/produit/${p.slug}\n\n`;
+    text += `- Lien : ${process.env.APP_URL || 'https://www.evolve.pf'}/produit/${p.slug}\n\n`;
   });
 
   text += `## Points de ventes\n\n`;

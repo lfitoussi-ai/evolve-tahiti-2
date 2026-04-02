@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { getActiveProducts } from '@/lib/data';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.APP_URL || 'https://evolve-tahiti.com';
+  const baseUrl = process.env.APP_URL || 'https://www.evolve.pf';
   const products = await getActiveProducts();
 
   const productUrls = products.map((product) => ({
