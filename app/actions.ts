@@ -7,7 +7,7 @@ export async function revalidateAll() {
   revalidatePath('/produits');
   revalidatePath('/produits/bracelets');
   revalidatePath('/produits/charmes');
-  revalidatePath('/boutiques');
+  revalidatePath('/points-de-vente');
   revalidatePath('/faq');
   revalidatePath('/produit/[slug]', 'page');
 }

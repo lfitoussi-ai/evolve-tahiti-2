@@ -25,15 +25,15 @@ export function Header() {
   }, [isOpen]);
 
   const catalogueLinks = [
-    { href: '/produits', label: 'Tout voir' },
-    { href: '/produits/charmes', label: 'Charmes' },
-    { href: '/produits/bracelets', label: 'Bracelets' },
-    { href: '/produits/boucles-d-oreilles', label: "Boucles d'oreilles" },
-    { href: '/produits/colliers', label: 'Colliers' },
+    { href: '/produits', label: 'TOUT VOIR' },
+    { href: '/produits/charmes', label: 'CHARMES' },
+    { href: '/produits/bracelets', label: 'BRACELETS' },
+    { href: '/produits/boucles-d-oreilles', label: "BOUCLES D'OREILLES" },
+    { href: '/produits/colliers', label: 'COLLIERS' },
   ];
 
   const navLinks = [
-    { href: '/boutiques', label: 'Boutiques' },
+    { href: '/points-de-vente', label: 'POINTS DE VENTES' },
     { href: '/faq', label: 'FAQ' },
   ];
 
@@ -70,7 +70,7 @@ export function Header() {
                     pathname.startsWith('/produits') ? 'text-primary' : 'text-foreground/80'
                   }`}
                 >
-                  Catalogue <ChevronDown size={14} className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                  CATALOGUE <ChevronDown size={14} className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
                 
                 <AnimatePresence>

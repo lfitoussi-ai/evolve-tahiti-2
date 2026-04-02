@@ -159,8 +159,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
 
           <div className="pt-8 space-y-6">
-            <a href="/boutiques" className="inline-flex h-12 items-center justify-center rounded-sm bg-primary px-10 text-sm uppercase tracking-widest font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg">
-              Voir nos boutiques
+            <a href="/points-de-vente" className="inline-flex h-12 items-center justify-center rounded-sm bg-primary px-10 text-sm uppercase tracking-widest font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg">
+              VOIR NOS POINTS DE VENTES
             </a>
           </div>
         </div>

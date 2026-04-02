@@ -20,7 +20,7 @@ export async function GET() {
     text += `- Lien : ${process.env.APP_URL || 'https://evolve-tahiti.com'}/produit/${p.slug}\n\n`;
   });
 
-  text += `## Boutiques\n\n`;
+  text += `## Points de ventes\n\n`;
   stores.forEach((s) => {
     text += `### ${s.name}\n`;
     text += `- Horaires : ${s.hours}\n`;

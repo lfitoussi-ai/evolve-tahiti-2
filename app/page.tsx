@@ -62,8 +62,8 @@ export default async function Home() {
             <Link href="/produits" className="inline-flex h-12 items-center justify-center rounded-sm bg-primary px-10 text-sm uppercase tracking-widest text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg">
               Découvrir la collection
             </Link>
-            <Link href="/boutiques" className="inline-flex h-12 items-center justify-center rounded-sm border border-border bg-transparent px-10 text-sm uppercase tracking-widest transition-all hover:border-primary hover:text-primary">
-              Nos Boutiques
+            <Link href="/points-de-vente" className="inline-flex h-12 items-center justify-center rounded-sm border border-border bg-transparent px-10 text-sm uppercase tracking-widest transition-all hover:border-primary hover:text-primary">
+              NOS POINTS DE VENTES
             </Link>
           </div>
         </div>
