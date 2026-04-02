@@ -44,6 +44,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="fr">
       <body className="min-h-screen bg-background font-sans antialiased flex flex-col" suppressHydrationWarning>
         <SiteLayout>{children}</SiteLayout>
+        {/* 100% privacy-first analytics */}
+        <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
       </body>
     </html>
   );
