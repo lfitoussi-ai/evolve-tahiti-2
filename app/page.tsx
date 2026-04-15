@@ -54,7 +54,7 @@ export default async function Home() {
       <section className="relative min-h-[80vh] md:min-h-0 pt-24 pb-0 md:py-32 overflow-hidden flex items-end md:items-center justify-center text-center px-4">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/hero-banner-evolve-tahiti.webp"
+            src="https://res.cloudinary.com/dkpbekkv5/image/upload/v1776235084/hero-banner-evolve-tahiti_1_ehvgav.webp"
             alt="Evolve Tahiti Hero Banner"
             fill
             className="object-cover opacity-90 md:opacity-60"
