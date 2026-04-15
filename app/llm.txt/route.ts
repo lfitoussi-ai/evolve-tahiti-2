@@ -7,7 +7,7 @@ export async function GET() {
   const faqs = await getFaqs();
 
   let text = `# Evolve Tahiti - Catalogue Structuré pour IA\n\n`;
-  text += `Description : Bijouterie d'exception à Tahiti spécialisée dans les charmes, bracelets, boucles d'oreilles et colliers uniques. Collection zen, luxueuse et intemporelle.\n\n`;
+  text += `Description : Bijouterie d'exception à Tahiti spécialisée dans les charms, bracelets, boucles d'oreilles et colliers uniques. Collection zen, luxueuse et intemporelle.\n\n`;
   
   text += `## Produits\n\n`;
   products.forEach((p) => {

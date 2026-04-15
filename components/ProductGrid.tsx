@@ -53,7 +53,7 @@ export function ProductGrid({ initialProducts }: ProductGridProps) {
           placeholder="Rechercher un produit, une matière, une ref..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="block w-full pl-11 pr-11 py-3 bg-secondary/30 border border-border/50 rounded-full text-sm font-light tracking-wide focus:outline-none focus:ring-1 focus:ring-primary/30 focus:border-primary/30 transition-all placeholder:text-muted-foreground/60"
+          className="block w-full pl-11 pr-11 py-3 bg-muted border border-brand-grey-light rounded-full text-sm font-light tracking-wide focus:outline-none focus:ring-1 focus:ring-brand-sage/30 focus:border-brand-sage/30 transition-all placeholder:text-brand-grey-primary/60"
         />
         {searchQuery && (
           <button

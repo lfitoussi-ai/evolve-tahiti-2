@@ -6,18 +6,18 @@ const baseUrl = process.env.APP_URL || 'https://www.evolve.pf';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Evolve Tahiti - Catalogue de Charmes & Bracelets',
+    default: 'Evolve Tahiti - Catalogue de Charms & Bracelets',
     template: '%s | Evolve Tahiti'
   },
-  description: 'Découvrez notre collection unique de charmes, bracelets, boucles d\'oreilles et colliers à Tahiti. Personnalisez votre histoire.',
+  description: 'Découvrez notre collection unique de charms, bracelets, boucles d\'oreilles et colliers à Tahiti. Personnalisez votre histoire.',
   metadataBase: new URL(baseUrl),
   openGraph: {
     type: 'website',
     locale: 'fr_PF',
     url: baseUrl,
     siteName: 'Evolve Tahiti',
-    title: 'Evolve Tahiti - Catalogue de Charmes & Bracelets',
-    description: 'Découvrez notre collection unique de charmes, bracelets, boucles d\'oreilles et colliers à Tahiti.',
+    title: 'Evolve Tahiti - Catalogue de Charms & Bracelets',
+    description: 'Découvrez notre collection unique de charms, bracelets, boucles d\'oreilles et colliers à Tahiti.',
     images: [
       {
         url: '/og-image.png', // Assume this exists or will be added
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Evolve Tahiti - Catalogue de Charmes & Bracelets',
-    description: 'Découvrez notre collection unique de charmes, bracelets, boucles d\'oreilles et colliers à Tahiti.',
+    title: 'Evolve Tahiti - Catalogue de Charms & Bracelets',
+    description: 'Découvrez notre collection unique de charms, bracelets, boucles d\'oreilles et colliers à Tahiti.',
     images: ['/og-image.png']
   },
   robots: {
@@ -38,8 +38,8 @@ export const metadata: Metadata = {
     follow: true
   },
   icons: {
-    icon: '/icon.svg',
-    apple: '/icon.svg',
+    icon: '/favicon_32x32.webp',
+    apple: '/favicon_32x32.webp',
   }
 };
 

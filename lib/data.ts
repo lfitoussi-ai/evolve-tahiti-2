@@ -5,7 +5,7 @@ import Papa from 'papaparse';
 export interface Product {
   id?: string;
   slug: string;
-  type: 'charmes' | 'bracelets' | 'boucles-d-oreilles' | 'colliers';
+  type: 'charms' | 'bracelets' | 'boucles-d-oreilles' | 'colliers';
   title: string;
   price_xpf: number;
   photos_png: string[];
@@ -32,6 +32,21 @@ export interface FAQ {
   order: number;
   question: string;
   answer: string;
+}
+
+let productsCache: Product[] | null = null;
+let storesCache: Store[] | null = null;
+let faqsCache: FAQ[] | null = null;
+
+function sanitizeSlug(slug: string): string {
+  return String(slug)
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Remove accents
+    .replace(/[^a-z0-9-]/g, "-") // Replace non-alphanumeric with hyphens
+    .replace(/-+/g, "-") // Remove double hyphens
+    .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
 }
 
 function readJSON<T>(filename: string): T[] {
@@ -63,11 +78,13 @@ function readDelimited<T>(filename: string): T[] {
 }
 
 export async function getProducts(): Promise<Product[]> {
+  if (productsCache) return productsCache;
+
   const data = readJSON<any>('products.json');
-  return data.map((item, index) => ({
+  productsCache = data.map((item, index) => ({
     id: String(index),
-    slug: String(item.slug).trim(),
-    type: String(item.type).trim().toLowerCase() as 'charmes' | 'bracelets' | 'boucles-d-oreilles' | 'colliers',
+    slug: sanitizeSlug(item.slug),
+    type: String(item.type).trim().toLowerCase() as 'charms' | 'bracelets' | 'boucles-d-oreilles' | 'colliers',
     title: item.title,
     price_xpf: typeof item.price_xpf === 'number' ? item.price_xpf : parseInt(item.price_xpf) || 0,
     photos_png: Array.isArray(item.photos_png) ? item.photos_png : (item.photos_png ? item.photos_png.split('|').map((url: string) => url.trim()) : []),
@@ -75,6 +92,8 @@ export async function getProducts(): Promise<Product[]> {
     materiaux: item.materiaux,
     ref: item.ref,
   })).sort((a, b) => a.slug.localeCompare(b.slug));
+
+  return productsCache;
 }
 
 export async function getActiveProducts(): Promise<Product[]> {
@@ -83,17 +102,20 @@ export async function getActiveProducts(): Promise<Product[]> {
 
 export async function getProductBySlug(slug: string): Promise<Product | undefined> {
   const products = await getActiveProducts();
-  return products.find(p => p.slug === slug);
+  const searchSlug = sanitizeSlug(slug);
+  return products.find(p => p.slug === searchSlug);
 }
 
-export async function getProductsByType(type: 'charmes' | 'bracelets' | 'boucles-d-oreilles' | 'colliers'): Promise<Product[]> {
+export async function getProductsByType(type: 'charms' | 'bracelets' | 'boucles-d-oreilles' | 'colliers'): Promise<Product[]> {
   const products = await getActiveProducts();
   return products.filter(p => p.type === type);
 }
 
 export async function getStores(): Promise<Store[]> {
+  if (storesCache) return storesCache;
+
   const data = readDelimited<any>('stores.tsv');
-  return data.map((item, index) => ({
+  storesCache = data.map((item, index) => ({
     id: String(index),
     name: item.name,
     hours: item.hours,
@@ -103,14 +125,20 @@ export async function getStores(): Promise<Store[]> {
     messenger_url: item.messenger_url,
     notes: item.notes,
   })).sort((a, b) => a.name.localeCompare(b.name));
+
+  return storesCache;
 }
 
 export async function getFaqs(): Promise<FAQ[]> {
+  if (faqsCache) return faqsCache;
+
   const data = readDelimited<any>('faqs.tsv');
-  return data.map((item, index) => ({
+  faqsCache = data.map((item, index) => ({
     id: String(index),
     order: parseInt(item.order) || 0,
     question: item.question,
     answer: item.answer,
   })).sort((a, b) => a.order - b.order);
+
+  return faqsCache;
 }

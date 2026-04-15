@@ -8,7 +8,7 @@ export async function GET() {
 
   const data = {
     site: 'Evolve Tahiti',
-    description: 'Catalogue de charmes et bracelets en Polynésie',
+    description: 'Catalogue de charms et bracelets en Polynésie',
     products: products.map((p) => ({
       id: p.slug,
       name: p.title,

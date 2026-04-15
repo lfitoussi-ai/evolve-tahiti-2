@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getActiveProducts } from '@/lib/data';
 import { ProductCard } from '@/components/ProductCard';
+import { ProductExplainer } from '@/components/ProductExplainer';
 
 export default async function Home() {
   const activeProducts = await getActiveProducts();
@@ -19,7 +21,7 @@ export default async function Home() {
           '@type': 'ImageObject',
           'url': `${baseUrl}/logo.png`
         },
-        'description': 'Bijouterie d\'exception à Tahiti proposant des charmes, bracelets, boucles d\'oreilles et colliers uniques.',
+        'description': 'Bijouterie d\'exception à Tahiti proposant des charms, bracelets, boucles d\'oreilles et colliers uniques.',
         'address': {
           '@type': 'PostalAddress',
           'addressLocality': 'Papeete',
@@ -49,25 +51,38 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 overflow-hidden flex items-center justify-center text-center px-4">
-        <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/tahitinature/1920/1080?blur=2')] bg-cover bg-center opacity-20"></div>
-        <div className="relative z-10 max-w-3xl space-y-8">
-          <h1 className="text-5xl md:text-7xl font-light tracking-widest uppercase text-foreground">
-            Evolve <span className="text-primary font-medium">Tahiti</span>
+      <section className="relative min-h-[80vh] md:min-h-0 pt-24 pb-0 md:py-32 overflow-hidden flex items-end md:items-center justify-center text-center px-4">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/hero-banner-evolve-tahiti.webp"
+            alt="Evolve Tahiti Hero Banner"
+            fill
+            className="object-cover opacity-90 md:opacity-60"
+            priority
+            referrerPolicy="no-referrer"
+          />
+          {/* Mobile gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent md:hidden" />
+          {/* Desktop white overlay */}
+          <div className="absolute inset-0 bg-white/30 hidden md:block" />
+        </div>
+        <div className="relative z-10 max-w-3xl space-y-2 md:space-y-4 pb-12 md:pb-0">
+          <h1 className="text-2xl sm:text-4xl md:text-7xl font-light tracking-widest uppercase text-white md:text-brand-black whitespace-nowrap">
+            Evolve <span className="text-brand-sage font-medium">Tahiti</span>
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground font-light tracking-wide leading-relaxed">
-            L&apos;essence de la nature polynésienne capturée dans des bijoux d&apos;exception. Une collection zen, luxueuse et intemporelle.
+          <p className="text-sm md:text-xl text-white/90 md:text-brand-grey-primary font-light tracking-wide leading-relaxed max-w-xs md:max-w-none mx-auto">
+            L&apos;essence de la nature polynésienne capturée dans des bijoux d&apos;exception.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-6 pt-8">
-            <Link href="/produits" className="inline-flex h-12 items-center justify-center rounded-sm bg-primary px-10 text-sm uppercase tracking-widest text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg">
+          <div className="flex flex-col sm:flex-row justify-center gap-6 pt-2 md:pt-4">
+            <Link href="/produits" className="inline-flex h-12 items-center justify-center rounded-sm bg-brand-sage px-10 text-sm uppercase tracking-widest text-white transition-all hover:bg-brand-sage/90 hover:shadow-lg">
               Découvrir la collection
-            </Link>
-            <Link href="/points-de-vente" className="inline-flex h-12 items-center justify-center rounded-sm border border-border bg-transparent px-10 text-sm uppercase tracking-widest transition-all hover:border-primary hover:text-primary">
-              NOS POINTS DE VENTES
             </Link>
           </div>
         </div>
       </section>
+
+      {/* Product Explainer Section */}
+      <ProductExplainer />
 
       {/* Featured Products */}
       <section className="container mx-auto px-4 py-24 space-y-12">

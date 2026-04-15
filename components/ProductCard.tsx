@@ -25,7 +25,7 @@ export function ProductCard({ product }: { product: Product }) {
         )}
       </div>
       <div className="space-y-1 sm:space-y-2 text-center">
-        <p className="text-[10px] sm:text-xs uppercase tracking-widest text-muted-foreground">{product.type}</p>
+        <p className="text-[10px] sm:text-xs uppercase tracking-widest text-brand-grey-primary">{product.type}</p>
         <h3 className="font-medium text-sm sm:text-lg tracking-wide line-clamp-2 min-h-[2.5rem] sm:min-h-0">{product.title}</h3>
         <p className="text-primary font-medium text-sm sm:text-base">{product.price_xpf.toLocaleString('fr-FR')} XPF</p>
       </div>

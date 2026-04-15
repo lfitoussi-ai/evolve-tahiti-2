@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Tous les produits | Evolve Tahiti',
-  description: 'Découvrez notre catalogue complet de charmes et bracelets.',
+  description: 'Découvrez notre catalogue complet de charms et bracelets.',
 };
 
 export default async function ProductsPage() {
@@ -18,9 +18,9 @@ export default async function ProductsPage() {
       <Breadcrumb items={[{ label: 'Catalogue' }]} />
       
       <div className="space-y-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-light uppercase tracking-widest">Notre Catalogue</h1>
-        <div className="w-12 h-0.5 bg-primary mx-auto"></div>
-        <p className="text-muted-foreground font-light tracking-wide">L&apos;intégralité de nos collections.</p>
+        <h1 className="text-4xl md:text-5xl font-light uppercase tracking-widest text-brand-black">Notre Catalogue</h1>
+        <div className="w-12 h-0.5 bg-brand-sage mx-auto"></div>
+        <p className="text-brand-grey-primary font-light tracking-wide">L&apos;intégralité de nos collections.</p>
       </div>
       <ProductGrid initialProducts={products} />
     </div>

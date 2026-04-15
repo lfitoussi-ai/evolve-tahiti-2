@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 const categoryLabels: Record<string, string> = {
-  'charmes': 'Charmes',
+  'charms': 'Charms',
   'bracelets': 'Bracelets',
   'boucles-d-oreilles': "Boucles d'oreilles",
   'colliers': 'Colliers'
@@ -134,12 +134,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </div>
         <div className="space-y-8">
           <div className="space-y-4">
-            <p className="text-xs uppercase tracking-widest text-muted-foreground">{product.type}</p>
-            <h1 className="text-4xl md:text-5xl font-light tracking-wide">{product.title}</h1>
-            <p className="text-2xl font-medium text-primary">{product.price_xpf.toLocaleString('fr-FR')} XPF</p>
+            <p className="text-xs uppercase tracking-widest text-brand-grey-primary">{product.type}</p>
+            <h1 className="text-4xl md:text-5xl font-light tracking-wide text-brand-black">{product.title}</h1>
+            <p className="text-2xl font-medium text-brand-sage">{product.price_xpf.toLocaleString('fr-FR')} XPF</p>
           </div>
-          <div className="w-12 h-px bg-border"></div>
-          <div className="prose prose-sm md:prose-base dark:prose-invert font-light tracking-wide leading-relaxed text-muted-foreground">
+          <div className="w-12 h-px bg-brand-grey-light"></div>
+          <div className="prose prose-sm md:prose-base dark:prose-invert font-light tracking-wide leading-relaxed text-brand-grey-primary">
             <p>{product.description}</p>
           </div>
 
@@ -159,7 +159,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
 
           <div className="pt-8 space-y-6">
-            <a href="/points-de-vente" className="inline-flex h-12 items-center justify-center rounded-sm bg-primary px-10 text-sm uppercase tracking-widest font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg">
+            <a href="/points-de-vente" className="inline-flex h-12 items-center justify-center rounded-sm bg-brand-sage px-10 text-sm uppercase tracking-widest font-medium text-white transition-all hover:bg-brand-sage/90 hover:shadow-lg">
               VOIR NOS POINTS DE VENTES
             </a>
           </div>

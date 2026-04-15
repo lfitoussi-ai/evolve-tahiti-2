@@ -26,7 +26,7 @@ export function Header() {
 
   const catalogueLinks = [
     { href: '/produits', label: 'TOUT VOIR' },
-    { href: '/produits/charmes', label: 'CHARMES' },
+    { href: '/produits/charms', label: 'CHARMS' },
     { href: '/produits/bracelets', label: 'BRACELETS' },
     { href: '/produits/boucles-d-oreilles', label: "BOUCLES D'OREILLES" },
     { href: '/produits/colliers', label: 'COLLIERS' },
@@ -39,17 +39,17 @@ export function Header() {
 
   return (
     <>
-      <header className={`sticky top-0 z-50 w-full border-b transition-colors duration-300 ${isOpen ? 'border-transparent bg-transparent' : 'border-border/50 bg-background/80 backdrop-blur-md'}`}>
-        <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-8">
+      <header className={`sticky top-0 z-50 w-full transition-all duration-500 ${isOpen ? 'bg-transparent' : 'bg-brand-cream/60 backdrop-blur-lg border-b border-brand-grey-light/20'}`}>
+        <div className="container mx-auto flex h-20 md:h-24 items-center justify-between px-6 md:px-12 transition-all duration-500">
           
           {/* Logo */}
-          <div className="z-50 flex items-center w-[50%] md:w-[180px]">
-            <Link href="/" className="w-full flex items-center">
+          <div className="z-50 flex items-center w-[45%] md:w-[150px] transition-all duration-500">
+            <Link href="/" className="w-full flex items-center hover:opacity-80 transition-opacity">
               <Image 
                 src="/logo_evolve-pf_green.svg" 
                 alt="Evolve Tahiti" 
-                width={180} 
-                height={40} 
+                width={150} 
+                height={34} 
                 className="w-full h-auto"
                 priority
               />
@@ -58,7 +58,7 @@ export function Header() {
 
           {/* Navigation Desktop & Burger Mobile (Alignés à droite) */}
           <div className="z-50 flex items-center">
-            <nav className="hidden md:flex items-center space-x-8 text-sm uppercase tracking-widest font-medium">
+            <nav className="hidden md:flex items-center space-x-10 text-[11px] uppercase tracking-[0.25em] font-medium">
               {/* Dropdown Catalogue */}
               <div 
                 className="relative group"
@@ -66,11 +66,11 @@ export function Header() {
                 onMouseLeave={() => setIsDropdownOpen(false)}
               >
                 <button 
-                  className={`flex items-center gap-1 transition-colors hover:text-primary ${
-                    pathname.startsWith('/produits') ? 'text-primary' : 'text-foreground/80'
+                  className={`flex items-center gap-1.5 transition-colors hover:text-brand-sage ${
+                    pathname.startsWith('/produits') ? 'text-brand-sage' : 'text-brand-grey-primary'
                   }`}
                 >
-                  CATALOGUE <ChevronDown size={14} className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                  CATALOGUE <ChevronDown size={12} strokeWidth={1.5} className={`transition-transform duration-500 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
                 
                 <AnimatePresence>
@@ -82,13 +82,13 @@ export function Header() {
                       transition={{ duration: 0.2 }}
                       className="absolute top-full left-0 pt-4 w-48"
                     >
-                      <div className="bg-background border border-border/50 shadow-xl rounded-sm overflow-hidden p-2">
+                      <div className="bg-brand-cream border border-brand-grey-light/50 shadow-xl rounded-sm overflow-hidden p-2">
                         {catalogueLinks.map((link) => (
                           <Link 
                             key={link.href} 
                             href={link.href}
-                            className={`block px-4 py-2 text-[11px] transition-colors hover:bg-secondary/50 hover:text-primary ${
-                              pathname === link.href ? 'text-primary bg-secondary/30' : 'text-foreground/80'
+                            className={`block px-4 py-2 text-[11px] transition-colors hover:bg-brand-sage/10 hover:text-brand-sage ${
+                              pathname === link.href ? 'text-brand-sage bg-brand-sage/20' : 'text-brand-grey-primary'
                             }`}
                           >
                             {link.label}
@@ -104,8 +104,8 @@ export function Header() {
                 <Link 
                   key={link.href} 
                   href={link.href} 
-                  className={`transition-colors hover:text-primary ${
-                    pathname === link.href ? 'text-primary' : 'text-foreground/80'
+                  className={`transition-colors hover:text-brand-sage px-2 ${
+                    pathname === link.href ? 'text-brand-sage' : 'text-brand-grey-primary'
                   }`}
                 >
                   {link.label}
@@ -115,12 +115,12 @@ export function Header() {
 
             {/* Bouton Menu Mobile */}
             <button 
-              className="md:hidden p-2 -mr-2 text-foreground focus:outline-none"
+              className="md:hidden p-2 -mr-2 text-brand-black focus:outline-none"
               onClick={() => setIsOpen(!isOpen)}
               aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
               aria-expanded={isOpen}
             >
-              {isOpen ? <X size={28} strokeWidth={1.5} /> : <Menu size={28} strokeWidth={1.5} />}
+              {isOpen ? <X size={24} strokeWidth={1} /> : <Menu size={24} strokeWidth={1} />}
             </button>
           </div>
         </div>
@@ -128,34 +128,34 @@ export function Header() {
 
       {/* Overlay Menu Mobile */}
       <div 
-        className={`fixed inset-0 z-40 bg-background/95 backdrop-blur-xl flex flex-col items-center justify-center transition-all duration-500 ease-in-out md:hidden ${
+        className={`fixed inset-0 z-40 bg-brand-cream/98 backdrop-blur-2xl flex flex-col items-center justify-center transition-all duration-700 ease-in-out md:hidden ${
           isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}
       >
-        <nav className="flex flex-col items-center space-y-6 text-lg uppercase tracking-widest font-light max-h-[80vh] overflow-y-auto w-full px-8">
-          <p className="text-[10px] text-muted-foreground tracking-[0.3em] font-medium mb-2">Catalogue</p>
+        <nav className="flex flex-col items-center space-y-8 text-sm uppercase tracking-[0.3em] font-light max-h-[80vh] overflow-y-auto w-full px-8">
+          <p className="text-[9px] text-brand-sage tracking-[0.4em] font-semibold mb-4 uppercase">Catalogue</p>
           {catalogueLinks.map((link) => (
             <Link 
               key={link.href} 
               href={link.href} 
               onClick={() => setIsOpen(false)}
-              className={`transition-colors hover:text-primary ${
-                pathname === link.href ? 'text-primary font-medium' : 'text-foreground'
+              className={`transition-colors hover:text-brand-sage text-xs ${
+                pathname === link.href ? 'text-brand-sage font-medium' : 'text-brand-black'
               }`}
             >
               {link.label}
             </Link>
           ))}
           
-          <div className="w-8 h-px bg-border/50 my-4"></div>
+          <div className="w-6 h-px bg-brand-grey-light/30 my-6"></div>
           
           {navLinks.map((link) => (
             <Link 
               key={link.href} 
               href={link.href} 
               onClick={() => setIsOpen(false)}
-              className={`transition-colors hover:text-primary ${
-                pathname === link.href ? 'text-primary font-medium' : 'text-foreground'
+              className={`transition-colors hover:text-brand-sage text-xs ${
+                pathname === link.href ? 'text-brand-sage font-medium' : 'text-brand-black'
               }`}
             >
               {link.label}

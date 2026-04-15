@@ -6,7 +6,7 @@ export async function revalidateAll() {
   revalidatePath('/');
   revalidatePath('/produits');
   revalidatePath('/produits/bracelets');
-  revalidatePath('/produits/charmes');
+  revalidatePath('/produits/charms');
   revalidatePath('/points-de-vente');
   revalidatePath('/faq');
   revalidatePath('/produit/[slug]', 'page');
