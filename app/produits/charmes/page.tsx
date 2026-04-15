@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function CharmesPage() {
-  const products = await getProductsByType('charmes');
+  const products = await getProductsByType('charms');
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 space-y-8 md:space-y-12">
