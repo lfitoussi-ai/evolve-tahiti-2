@@ -26,7 +26,7 @@ export function Header() {
 
   const catalogueLinks = [
     { href: '/produits', label: 'TOUT VOIR' },
-    { href: '/produits/charms', label: 'CHARMS' },
+    { href: '/produits/charmes', label: 'CHARMES' },
     { href: '/produits/bracelets', label: 'BRACELETS' },
     { href: '/produits/boucles-d-oreilles', label: "BOUCLES D'OREILLES" },
     { href: '/produits/colliers', label: 'COLLIERS' },

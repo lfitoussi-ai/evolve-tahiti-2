@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Tous les produits | Evolve Tahiti',
-  description: 'Découvrez notre catalogue complet de charms et bracelets.',
+  description: 'Découvrez notre catalogue complet de charmes et bracelets.',
 };
 
 export default async function ProductsPage() {

@@ -5,7 +5,7 @@ import Papa from 'papaparse';
 export interface Product {
   id?: string;
   slug: string;
-  type: 'charms' | 'bracelets' | 'boucles-d-oreilles' | 'colliers';
+  type: 'charms' | 'charmes' | 'bracelets' | 'boucles-d-oreilles' | 'colliers';
   title: string;
   price_xpf: number;
   photos_png: string[];
@@ -84,7 +84,7 @@ export async function getProducts(): Promise<Product[]> {
   productsCache = data.map((item, index) => ({
     id: String(index),
     slug: sanitizeSlug(item.slug),
-    type: String(item.type).trim().toLowerCase() as 'charms' | 'bracelets' | 'boucles-d-oreilles' | 'colliers',
+    type: String(item.type).trim().toLowerCase() as 'charms' | 'charmes' | 'bracelets' | 'boucles-d-oreilles' | 'colliers',
     title: item.title,
     price_xpf: typeof item.price_xpf === 'number' ? item.price_xpf : parseInt(item.price_xpf) || 0,
     photos_png: Array.isArray(item.photos_png) ? item.photos_png : (item.photos_png ? item.photos_png.split('|').map((url: string) => url.trim()) : []),
@@ -106,7 +106,7 @@ export async function getProductBySlug(slug: string): Promise<Product | undefine
   return products.find(p => p.slug === searchSlug);
 }
 
-export async function getProductsByType(type: 'charms' | 'bracelets' | 'boucles-d-oreilles' | 'colliers'): Promise<Product[]> {
+export async function getProductsByType(type: 'charms' | 'charmes' | 'bracelets' | 'boucles-d-oreilles' | 'colliers'): Promise<Product[]> {
   const products = await getActiveProducts();
   return products.filter(p => p.type === type);
 }

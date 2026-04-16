@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 const categoryLabels: Record<string, string> = {
-  'charms': 'Charms',
+  'charmes': 'Charmes',
   'bracelets': 'Bracelets',
   'boucles-d-oreilles': "Boucles d'oreilles",
   'colliers': 'Colliers'
