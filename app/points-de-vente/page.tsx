@@ -18,17 +18,29 @@ export default async function StoresPage() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         {stores.map((store, index) => (
-          <div key={index} className="rounded-sm border border-brand-grey-light/50 bg-brand-cream p-8 space-y-6 shadow-sm">
-            <h2 className="text-2xl font-light tracking-wide text-brand-black">{store.name}</h2>
-            <div className="space-y-3 text-sm font-light tracking-wide text-brand-grey-primary">
-              <p><strong>Horaires :</strong> {store.hours}</p>
-              {store.phone && <p><strong>Téléphone :</strong> {store.phone}</p>}
-              {store.email && <p><strong>Email :</strong> <a href={`mailto:${store.email}`} className="text-brand-sage hover:underline">{store.email}</a></p>}
-              {store.notes && <p className="text-brand-grey-primary italic">{store.notes}</p>}
+          <div key={index} className="rounded-sm border border-brand-grey-light bg-[#F1F0E2]/50 p-8 space-y-6 shadow-sm">
+            <h2 className="text-3xl font-medium tracking-tight text-brand-black">{store.name}</h2>
+            <div className="space-y-4 text-[15px] leading-relaxed tracking-wide text-brand-grey-primary">
+              <p><span className="font-normal opacity-70">Horaires :</span> {store.hours}</p>
+              {store.phone && <p><span className="font-normal opacity-70">Téléphone :</span> {store.phone}</p>}
+              {store.email && (
+                <p>
+                  <span className="font-normal opacity-70">Email :</span>{' '}
+                  <a href={`mailto:${store.email}`} className="text-brand-sage hover:underline">
+                    {store.email}
+                  </a>
+                </p>
+              )}
+              {store.notes && <p className="text-brand-grey-primary italic font-light">{store.notes}</p>}
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 pt-6">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
               {store.google_maps_url && (
-                <a href={store.google_maps_url} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center justify-center rounded-sm bg-brand-sage px-6 text-xs uppercase tracking-widest font-medium text-white transition-all hover:bg-brand-sage/90">
+                <a 
+                  href={store.google_maps_url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-flex h-12 items-center justify-center rounded-sm bg-brand-sage px-8 text-[13px] uppercase tracking-[0.2em] font-medium text-white transition-all hover:bg-brand-sage/90"
+                >
                   Voir sur la carte
                 </a>
               )}

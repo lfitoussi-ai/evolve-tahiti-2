@@ -12,6 +12,7 @@ export interface Product {
   description: string;
   materiaux?: string;
   ref?: string;
+  inStock?: boolean;
   createdAt?: any;
   updatedAt?: any;
 }
@@ -35,6 +36,8 @@ export interface FAQ {
 }
 
 let productsCache: Product[] | null = null;
+let lastFetchTime: number = 0;
+const CACHE_TTL = 1000 * 60; // 1 minute
 let storesCache: Store[] | null = null;
 let faqsCache: FAQ[] | null = null;
 
@@ -83,7 +86,35 @@ function readDelimited<T>(filename: string): T[] {
 }
 
 export async function getProducts(): Promise<Product[]> {
-  if (productsCache) return productsCache;
+  const now = Date.now();
+  if (process.env.NOTION_API_KEY && process.env.NOTION_CATALOG_DATABASE_ID) {
+    if (productsCache && (now - lastFetchTime < CACHE_TTL)) {
+      return productsCache;
+    }
+    
+    try {
+      const { getNotionProducts } = await import('./notion');
+      const notionProducts = await getNotionProducts(process.env.NOTION_CATALOG_DATABASE_ID);
+      if (notionProducts.length > 0) {
+        // Enforce uniqueness by slug to prevent React key collision errors
+        const uniqueProductsMap = new Map<string, Product>();
+        notionProducts.forEach(p => {
+          if (!uniqueProductsMap.has(p.slug)) {
+            uniqueProductsMap.set(p.slug, p);
+          }
+        });
+        
+        productsCache = Array.from(uniqueProductsMap.values()).sort((a, b) => a.slug.localeCompare(b.slug));
+        lastFetchTime = now;
+        return productsCache;
+      }
+    } catch (e) {
+      console.error("Notion fetch failing", e);
+      if (productsCache) return productsCache;
+    }
+  }
+
+  if (productsCache && !process.env.NOTION_API_KEY) return productsCache;
 
   const data = readJSON<any>('products.json');
   productsCache = data
@@ -118,8 +149,30 @@ export async function getProductsByType(type: 'charms' | 'charmes' | 'bracelets'
   return products.filter(p => p.type === type);
 }
 
+let lastStoresFetchTime: number = 0;
+let lastFaqsFetchTime: number = 0;
+
 export async function getStores(): Promise<Store[]> {
-  if (storesCache) return storesCache;
+  const now = Date.now();
+  if (process.env.NOTION_API_KEY && process.env.NOTION_STORE_DATABASE_ID) {
+    if (storesCache && (now - lastStoresFetchTime < CACHE_TTL)) {
+      return storesCache;
+    }
+    try {
+      const { getNotionStores } = await import('./notion');
+      const notionStores = await getNotionStores(process.env.NOTION_STORE_DATABASE_ID);
+      if (notionStores.length > 0) {
+        storesCache = notionStores.sort((a, b) => a.name.localeCompare(b.name));
+        lastStoresFetchTime = now;
+        return storesCache;
+      }
+    } catch (e) {
+      console.error("Notion stores fetch failing", e);
+      if (storesCache) return storesCache;
+    }
+  }
+
+  if (storesCache && !process.env.NOTION_API_KEY) return storesCache;
 
   const data = readDelimited<any>('stores.tsv');
   storesCache = data
@@ -139,7 +192,30 @@ export async function getStores(): Promise<Store[]> {
 }
 
 export async function getFaqs(): Promise<FAQ[]> {
-  if (faqsCache) return faqsCache;
+  const now = Date.now();
+  if (process.env.NOTION_API_KEY && process.env.NOTION_FAQ_DATABASE_ID) {
+    if (faqsCache && (now - lastFaqsFetchTime < CACHE_TTL)) {
+      return faqsCache;
+    }
+    try {
+      const { getNotionFaqs } = await import('./notion');
+      const notionFaqs = await getNotionFaqs(process.env.NOTION_FAQ_DATABASE_ID);
+      if (notionFaqs.length > 0) {
+        faqsCache = notionFaqs.map((faq, index) => ({
+          ...faq,
+          id: faq.id || String(index),
+          order: faq.order || index + 1
+        })).sort((a, b) => a.order - b.order);
+        lastFaqsFetchTime = now;
+        return faqsCache;
+      }
+    } catch (e) {
+      console.error("Notion faqs fetch failing", e);
+      if (faqsCache) return faqsCache;
+    }
+  }
+
+  if (faqsCache && !process.env.NOTION_API_KEY) return faqsCache;
 
   const data = readDelimited<any>('faqs.tsv');
   faqsCache = data
@@ -152,4 +228,13 @@ export async function getFaqs(): Promise<FAQ[]> {
     })).sort((a, b) => a.order - b.order);
 
   return faqsCache;
+}
+
+export function clearCache() {
+  productsCache = null;
+  storesCache = null;
+  faqsCache = null;
+  lastFetchTime = 0;
+  lastStoresFetchTime = 0;
+  lastFaqsFetchTime = 0;
 }

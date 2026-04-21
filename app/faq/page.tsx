@@ -18,7 +18,7 @@ export default async function FaqPage() {
       </div>
       <div className="space-y-8">
         {faqs.map((faq) => (
-          <div key={faq.order} className="border-b border-brand-grey-light/50 pb-8">
+          <div key={faq.id} className="border-b border-brand-grey-light/50 pb-8">
             <h3 className="text-xl font-light tracking-wide mb-4 text-brand-black">{faq.question}</h3>
             <p className="text-brand-grey-primary font-light leading-relaxed">{faq.answer}</p>
           </div>
