@@ -51,13 +51,13 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] md:min-h-0 pt-24 pb-0 md:py-32 overflow-hidden flex items-end md:items-center justify-center text-center px-4">
+      <section className="relative w-full aspect-[4/5] sm:aspect-video md:aspect-[21/9] lg:aspect-[25/9] min-h-[500px] max-h-[85vh] overflow-hidden flex items-center justify-center text-center px-4">
         <div className="absolute inset-0 z-0">
           <Image
             src="https://res.cloudinary.com/dkpbekkv5/image/upload/v1776235084/hero-banner-evolve-tahiti_1_ehvgav.webp"
             alt="Evolve Tahiti Hero Banner"
             fill
-            className="object-cover opacity-90 md:opacity-60"
+            className="object-cover object-center opacity-90 md:opacity-60"
             priority
             referrerPolicy="no-referrer"
           />
@@ -66,7 +66,7 @@ export default async function Home() {
           {/* Desktop white overlay */}
           <div className="absolute inset-0 bg-white/30 hidden md:block" />
         </div>
-        <div className="relative z-10 max-w-3xl space-y-2 md:space-y-4 pb-12 md:pb-0">
+        <div className="relative z-10 max-w-3xl space-y-2 md:space-y-4">
           <h1 className="text-2xl sm:text-4xl md:text-7xl font-light tracking-widest uppercase text-white md:text-brand-black whitespace-nowrap">
             Evolve <span className="text-brand-sage font-medium">Tahiti</span>
           </h1>
