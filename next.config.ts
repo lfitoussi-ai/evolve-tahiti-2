@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
   },
   // Allow access to remote image placeholder.
   images: {
+    minimumCacheTTL: 2678400, // 31 days
+    formats: ['image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
